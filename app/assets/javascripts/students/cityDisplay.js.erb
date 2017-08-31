@@ -1,0 +1,21 @@
+//Displays the cities the correspond to the selected country in the combo box in student new
+
+//Explanation: https://stackoverflow.com/questions/18770517/rails-4-how-to-use-document-ready-with-turbo-links
+$(document).on('turbolinks:load', function(){
+  $('#country_dd').on('change', function(){
+
+    //Displays the cities the correspond to the selected country in the combo box in student new
+    var selectedCountry = $('#country_dd :selected').text();
+
+    $.getJSON('/students/filter_cities/' + selectedCountry, function(json, textStatus) {
+
+      //Reset city dropdown
+      $("#city_dd").html('');
+
+      $(json).each(function(index, val) {
+        $("#city_dd").append('<option value=' + val.id + '>'+ val.name + '</option>');
+      });
+
+    });
+  });
+});
